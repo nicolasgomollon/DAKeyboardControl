@@ -183,14 +183,14 @@ static char UIViewKeyboardOpened;
 
 - (void)inputKeyboardDidShow {
 	// Grab the keyboard view
-	self.keyboardActiveView = self.keyboardActiveInput.inputAccessoryView.superview;
+	self.keyboardActiveView = self.findInputSetHostView;
 	self.keyboardActiveView.hidden = NO;
 	
 	// If the active keyboard view could not be found (UITextViews...), try again
 	if (!self.keyboardActiveView) {
 		// Find the first responder on subviews and look re-assign first responder to it
 		self.keyboardActiveInput = [self recursiveFindFirstResponder:self];
-		self.keyboardActiveView = self.keyboardActiveInput.inputAccessoryView.superview;
+		self.keyboardActiveView = self.findInputSetHostView;
 		self.keyboardActiveView.hidden = NO;
 	}
 }
@@ -277,7 +277,7 @@ static char UIViewKeyboardOpened;
 - (void)panGestureDidChange:(UIPanGestureRecognizer *)gesture {
 	if (!self.keyboardActiveView || !self.keyboardActiveInput || self.keyboardActiveView.hidden) {
 		self.keyboardActiveInput = [self recursiveFindFirstResponder:self];
-		self.keyboardActiveView = self.keyboardActiveInput.inputAccessoryView.superview;
+		self.keyboardActiveView = self.findInputSetHostView;
 		self.keyboardActiveView.hidden = NO;
 	} else {
 		self.keyboardActiveView.hidden = NO;
@@ -376,6 +376,28 @@ static char UIViewKeyboardOpened;
 		}
 	}
 	return found;
+}
+
+- (UIView *)findInputSetHostView {
+	UIView *inputSetHostView = nil;
+	if ([[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){.majorVersion = 9, .minorVersion = 0, .patchVersion = 0}]) {
+		for (UIWindow *window in [UIApplication sharedApplication].windows) {
+			if ([window isKindOfClass:NSClassFromString(@"UIRemoteKeyboardWindow")]) {
+				for (UIView *view in window.subviews) {
+					if ([view isKindOfClass:NSClassFromString(@"UIInputSetHostView")]) {
+						for (UIView *subview in view.subviews) {
+							if ([subview isKindOfClass:NSClassFromString(@"UIInputSetHostView")]) {
+								return subview;
+							}
+						}
+					}
+				}
+			}
+		}
+	} else {
+		inputSetHostView = self.keyboardActiveInput.inputAccessoryView.superview;
+	}
+	return inputSetHostView;
 }
 
 - (void)swizzled_addSubview:(UIView *)subview {
