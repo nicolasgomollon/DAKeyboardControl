@@ -1,6 +1,6 @@
 //
 //  DAKeyboardControl.h
-//  DAKeyboardControlExample
+//  DAKeyboardControl
 //
 //  Created by Daniel Amitay on 7/14/12.
 //  Copyright (c) 2012 Daniel Amitay. All rights reserved.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^DAKeyboardDidMoveBlock)(CGRect keyboardFrameInView, BOOL opening, BOOL closing);
+typedef void (^DAKeyboardDidMoveBlock)(CGRect keyboardFrame, BOOL opening, BOOL closing);
 
 /** DAKeyboardControl allows you to easily add keyboard awareness and scrolling
  dismissal (a receding keyboard ala iMessages app) to any UIView, UIScrollView
@@ -50,8 +50,6 @@ typedef void (^DAKeyboardDidMoveBlock)(CGRect keyboardFrameInView, BOOL opening,
  */
 - (void)removeKeyboardControl;
 
-/** Returns the keyboard frame in the view */
-- (CGRect)keyboardFrameInView;
 @property (nonatomic, readonly, getter = isKeyboardOpened) BOOL keyboardOpened;
 
 /** Convenience method to dismiss the keyboard */
