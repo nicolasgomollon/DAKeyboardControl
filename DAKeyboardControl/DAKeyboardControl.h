@@ -30,6 +30,7 @@ typedef void (^DAKeyboardDidMoveBlock)(CGRect keyboardFrame, BOOL opening, BOOL 
  @see addKeyboardNonpanningWithActionHandler:
  @see removeKeyboardControl
  */
+- (void)addKeyboardPanning;
 - (void)addKeyboardPanningWithActionHandler:(DAKeyboardDidMoveBlock)didMoveBlock;
 - (void)addKeyboardPanningWithFrameBasedActionHandler:(DAKeyboardDidMoveBlock)didMoveFrameBasesBlock
                          constraintBasedActionHandler:(DAKeyboardDidMoveBlock)didMoveConstraintBasesBlock;

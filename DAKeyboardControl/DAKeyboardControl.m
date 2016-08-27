@@ -52,8 +52,12 @@ static char UIViewKeyboardOpened;
 
 #pragma mark - Public Methods
 
+- (void)addKeyboardPanning {
+	[self addKeyboardPanningWithActionHandler:nil];
+}
+
 - (void)addKeyboardPanningWithActionHandler:(DAKeyboardDidMoveBlock)actionHandler {
-	[self addKeyboardControl:YES frameBasedActionHandler:actionHandler constraintBasedActionHandler:0];
+	[self addKeyboardControl:YES frameBasedActionHandler:actionHandler constraintBasedActionHandler:nil];
 }
 
 - (void)addKeyboardPanningWithFrameBasedActionHandler:(DAKeyboardDidMoveBlock)didMoveFrameBasesBlock constraintBasedActionHandler:(DAKeyboardDidMoveBlock)didMoveConstraintBasesBlock {
@@ -61,7 +65,7 @@ static char UIViewKeyboardOpened;
 }
 
 - (void)addKeyboardNonpanningWithActionHandler:(DAKeyboardDidMoveBlock)actionHandler {
-	[self addKeyboardControl:NO frameBasedActionHandler:actionHandler constraintBasedActionHandler:0];
+	[self addKeyboardControl:NO frameBasedActionHandler:actionHandler constraintBasedActionHandler:nil];
 }
 
 - (void)addKeyboardNonpanningWithFrameBasedActionHandler:(DAKeyboardDidMoveBlock)didMoveFrameBasesBlock constraintBasedActionHandler:(DAKeyboardDidMoveBlock)didMoveConstraintBasesBlock {
