@@ -51,6 +51,8 @@ typedef void (^DAKeyboardDidMoveBlock)(CGRect keyboardFrame, BOOL opening, BOOL 
  */
 - (void)removeKeyboardControl;
 
+/** Returns the keyboard frame in the view */
+- (CGRect)keyboardFrame;
 @property (nonatomic, readonly, getter = isKeyboardOpened) BOOL keyboardOpened;
 
 /** Convenience method to dismiss the keyboard */

@@ -94,6 +94,14 @@ static char UIViewKeyboardOpened;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(inputKeyboardDidHide) name:UIKeyboardDidHideNotification object:nil];
 }
 
+- (CGRect)keyboardFrame {
+	if (self.keyboardActiveView) {
+		return self.keyboardActiveView.frame;
+	} else {
+		return CGRectMake(0.0f, [UIScreen mainScreen].bounds.size.height, 0.0f, 0.0f);
+	}
+}
+
 - (void)removeKeyboardControl {
 	// Unregister for text input notifications
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidBeginEditingNotification object:nil];
